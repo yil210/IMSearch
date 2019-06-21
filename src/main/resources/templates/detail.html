@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleleaf.org">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <title>IMSearch - Discover movies</title>
+
+  <!-- Bootstrap core CSS -->
+  <link rel="stylesheet" th:href="@{/bootstrap/css/bootstrap.min.css}">
+
+  <!-- Custom styles for this template -->
+
+<!--    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">-->
+    <link rel="stylesheet" th:href="@{https://fonts.googleapis.com/icon?family=Material+Icons}">
+
+<link rel="stylesheet" th:href="@{/css/main.css}">
+    <script th:src="@{https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js}"></script>
+    
+  <script th:src="@{http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js}" type="text/javascript" ></script>
+  <script th:inline="javascript" th:src="@{/js/background.js}"></script>
+
+</head>
+
+<body id="myBody" name="myBody">
+<!-- Navigation -->
+<!--  <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" >-->
+    <nav class="navbar navbar-expand-lg fixed-top" style="color: #fff; background-color: black">
+    <div class="container">
+      <a class="navbar-brand" style="color: #fff" href="/index">IMSearch</a>
+        <div class="s-bar">
+		<form action="/index" method="POST">
+			<input type="text" id="query" name="query" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Search';}">
+			<input type="submit" value="Search"/>
+		</form>
+	   </div>
+    <i class="small material-icons" style="float: right">settings</i>
+    <a href="/advanced_search"style="color: #fff; float: right">Advanced Search</a>
+
+    </div>
+  </nav>
+
+  <!-- Page Content -->
+  <div class="container">
+
+    <div class="row">
+        <br /><br /><br /><br /><br />
+    </div>
+      
+    <div class="row">
+      <!-- Blog Entries Column -->
+      <div class="col-md-8">
+
+        <div class="card mb-4" style="opacity: 0.9">
+<!--          <img class="card-img-top" src="http://placehold.it/750x300" alt="Card image cap">-->
+            
+          <div class="card-body">
+
+              <h3><span class="card-title" th:text="${movie.name}"></span>
+                  <span th:if="${movie.aggregateRating != null}">
+                  <span style="float: right" th:text="${movie.aggregateRating.ratingValue}"></span>
+                  <span><i class="small material-icons" style="float: right">stars</i></span>
+                  </span>
+              </h3>
+
+              <div class="row">
+
+                <div class="col-sm-4">
+                    <a th:href="@{${movie.image}}"><img class="img-fluid" th:src="${movie.image}"></a>
+                </div>
+                <div class="col-sm-8">
+                    <span th:if="${movie.director != null}">
+                        <strong>Director:</strong>&nbsp;
+                            <span th:each="d : ${movie.director}">
+                            <span th:text="${d}"></span>&nbsp;
+                            </span>
+                            <br />
+                    </span>
+                    <span th:if="${movie.duration != null}">
+                        <strong>Duration:</strong>&nbsp;
+                        <span th:text="${movie.duration}"></span>
+                        <br />
+                    </span>
+                    <span th:if="${movie.datePublished != null}">
+                        <strong>Release:</strong>&nbsp;
+                        <span th:text="${movie.datePublished}"></span>
+                        <br />
+                    </span>
+                    <span th:if="${movie.genre != null}">
+                        <strong>Genre:</strong>&nbsp;
+                            <span th:each="g : ${movie.genre}">
+                            <span th:text="${g}"></span>,&nbsp;
+                            </span>
+                        <br />
+                    </span>
+
+                    <span th:if="${movie.actor != null}">
+                        <strong>Stars:</strong>&nbsp;
+                            <span th:each="a : ${movie.actor}">
+                            <span th:text="${a}"></span>,&nbsp;
+                            </span>
+                        <br /><br />
+                    </span>
+                    <span th:if="${movie.description != null}">
+                        <strong>Description:</strong>&nbsp;
+                        <p class="card-text" th:text="${movie.description}"></p>
+                        <br />
+                    </span>
+                </div>
+            </div>
+
+              <div class="row" th:if="${movie.trailer != null}">
+                  <div class="col-sm-12">
+                      <div class="responsive-video">
+                          <iframe th:src="${movie.trailer}" allowfullscreen width=100% height=420></iframe>
+                      </div>
+                  </div>
+              </div>
+              <div class="row" th:if="${movie.review != null}">
+                  <div class="col-sm-12">
+                      <strong>Review:</strong>&nbsp;
+                      <i class="small material-icons" style="float: right">mood</i>
+                      <span><i class="small material-icons" style="float: right">keyboard_arrow_right</i>
+                          <h6 class="card-text" style="text-decoration: underline" th:text="${movie.review.reviewName}"></h6>
+                      </span>
+                      <p class="card-text" th:text="${movie.review.reviewBody}"></p>
+                      <strong>User:</strong>&nbsp;
+                      <span class="card-text" th:text="${movie.review.authorName}"></span>,&nbsp;
+                      <span th:text="${movie.review.dateCreated}"></span>&nbsp;&nbsp;&nbsp;
+                      <strong>Rating:</strong>&nbsp;
+                      <span th:text="${movie.review.ratingValue}"></span>
+
+                  </div>
+              </div>
+
+
+          </div>
+          <div class="card-footer text-muted">
+              Is this result useful?
+              <a href="#"><i class="small material-icons" style="float: right">thumb_down</i></a>
+              <a href="#"><i class="small material-icons" style="float: right">thumb_up</i></a>
+              
+          </div>
+
+        </div>
+
+
+        <!-- Pagination -->
+        <ul class="pagination justify-content-center mb-4">
+          <li class="page-item">
+            <a class="page-link" href="#">&larr; Older</a>
+          </li>
+          <li class="page-item disabled">
+            <a class="page-link" href="#">Newer &rarr;</a>
+          </li>
+        </ul>
+
+      </div>
+    
+      <!-- Sidebar Widgets Column -->
+      <div class="col-md-3 offset-7 position-fixed" style="opacity: 0.9">
+        <!-- Categories Widget -->
+        <div class="card my-4">
+          <h5 class="card-header">Genres</h5>
+          <div class="card-body">
+              <div class="row" style="text-align:left">
+                  <div class="col-lg-6">
+                      <ul class="list-unstyled mb-0">
+                          <li>
+                              <a th:href="@{'/search_genre/action'}">Action</a>
+                          </li>
+                          <li>
+                              <a th:href="@{'/search_genre/animation'}">Animation</a>
+                          </li>
+                          <li>
+                              <a th:href="@{'/search_genre/adventure'}">Adventure</a>
+                          </li>
+                          <li>
+                              <a th:href="@{'/search_genre/biography'}">Biography</a>
+                          </li>
+                          <li>
+                              <a th:href="@{'/search_genre/comedy'}">Comedy</a>
+                          </li>
+                          <li>
+                              <a th:href="@{'/search_genre/crime'}">Crime</a>
+                          </li>
+                          <li>
+                              <a th:href="@{'/search_genre/documentary'}">Documentary</a>
+                          </li>
+                          <li>
+                              <a th:href="@{'/search_genre/drama'}">Drama</a>
+                          </li>
+                          <li>
+                              <a th:href="@{'/search_genre/family'}">Family</a>
+                          </li>
+                          <li>
+                              <a th:href="@{'/search_genre/fantasy'}">Fantasy</a>
+                          </li>
+                          <li>
+                              <a th:href="@{'/search_genre/filmnoir'}">Film Noir</a>
+                          </li>
+                          <li>
+                              <a th:href="@{'/search_genre/history'}">History</a>
+                          </li>
+                      </ul>
+                  </div>
+                  <div class="col-lg-6">
+                      <ul class="list-unstyled mb-0">
+
+                          <li>
+                              <a th:href="@{'/search_genre/horror'}">Horror</a>
+                          </li>
+                          <li>
+                              <a th:href="@{'/search_genre/music'}">Music</a>
+                          </li>
+                          <li>
+                              <a th:href="@{'/search_genre/musical'}">Musical</a>
+                          </li>
+                          <li>
+                              <a th:href="@{'/search_genre/mystery'}">Mystery</a>
+                          </li>
+                          <li>
+                              <a th:href="@{'/search_genre/romance'}">Romance</a>
+                          </li>
+                          <li>
+                              <a th:href="@{'/search_genre/sci-fi'}">Sci-Fi</a>
+                          </li>
+                          <li>
+                              <a th:href="@{'/search_genre/short'}">Short</a>
+                          </li>
+                          <li>
+                              <a th:href="@{'/search_genre/sport'}">Sport</a>
+                          </li>
+                          <li>
+                              <a th:href="@{'/search_genre/superhero'}">Superhero</a>
+                          </li>
+                          <li>
+                              <a th:href="@{'/search_genre/thriller'}">Thriller</a>
+                          </li>
+                          <li>
+                              <a th:href="@{'/search_genre/war'}">War</a>
+                          </li>
+                          <li>
+                              <a th:href="@{'/search_genre/western'}">Western</a>
+                          </li>
+                      </ul>
+                  </div>
+              </div>
+          </div>
+        </div>
+
+        <!-- Side Widget -->
+        <!--<div class="card my-4">-->
+          <!--<h5 class="card-header">More Like This</h5>-->
+          <!--<div class="card-body">-->
+              <!--<div class="row">-->
+                <!--<div class="col-sm-4">-->
+                    <!--<img class="img-fluid" src="https://m.media-amazon.com/images/M/MV5BMTA2NDc3Njg5NDVeQTJeQWpwZ15BbWU4MDc1NDcxNTUz._V1_UX182_CR0,0,182,268_AL_.jpg">-->
+                <!--</div>-->
+                <!--<div class="col-sm-4">-->
+                    <!--<img class="img-fluid" src="https://m.media-amazon.com/images/M/MV5BNmE5ZmE3OGItNTdlNC00YmMxLWEzNjctYzAwOGQ5ODg0OTI0XkEyXkFqcGdeQXVyMTMxODk2OTU@._V1_UX182_CR0,0,182,268_AL_.jpg">-->
+                <!--</div>-->
+                <!--<div class="col-sm-4">-->
+                    <!--<img class="img-fluid" src="https://m.media-amazon.com/images/M/MV5BMTYxNDA3MDQwNl5BMl5BanBnXkFtZTcwNTU4Mzc1Nw@@._V1_UX182_CR0,0,182,268_AL_.jpg">-->
+                <!--</div>-->
+              <!--</div>-->
+              <!---->
+          <!--</div>-->
+        <!--</div>-->
+
+      </div>
+</div>
+    <!-- /.row -->
+  </div>
+  <!-- /.container -->
+
+  <!-- Footer -->
+  <!--<footer class="py-5" style="background-color: black">-->
+    <!--<div class="container">-->
+      <!--<p class="m-0 text-center text-white">Copyright &copy; IMSearch 2019</p>-->
+    <!--</div>-->
+    <!--&lt;!&ndash; /.container &ndash;&gt;-->
+  <!--</footer>-->
+
+  <!-- Bootstrap core JavaScript -->
+  <script th:src="@{jquery/jquery.min.js}"></script>
+  <script th:src="@{bootstrap/js/bootstrap.bundle.min.js}"></script>
+
+</body>
+<!--
+<script>
+var images=new Array('images/b0.jpg','images/b1.jpg','images/b2.jpg','images/b3.jpg','images/b5.jpg');
+var nextimage=0;
+doSlideshow();
+
+function doSlideshow(){
+    if(nextimage>=images.length){nextimage=0;}
+    $('body')
+    .css('background-image','url("'+images[nextimage++]+'")')
+    .fadeIn(500,function(){
+        setTimeout(doSlideshow,5000);
+    });
+}
+</script>
+-->
+
+</html>

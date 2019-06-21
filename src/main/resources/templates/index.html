@@ -1,0 +1,30 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<title>Movie Search</title>
+	<link href="css/style.css" rel="stylesheet" type="text/css" media="all"/>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<!--Google Fonts-->
+	<link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+	<!--Google Fonts-->
+</head>
+<body>
+<!--search start here-->
+<div class="search">
+	<i> </i>
+	<div class="s-bar">
+		<form action="/index" method="POST">
+			<input type="text" id="query" name="query" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Search';}">
+			<input type="submit"  value="Search"/>
+		</form>
+	</div>
+	<p>Popular searches: <a href="#">Avengers: Infinity War</a> <a href="#">   The Dark Knight </a></p>
+</div>
+<!--search end here-->
+<div class="copyright">
+	<p>2019 &copy Movie Search All rights reserved | </p>
+</div>
+</body>
+</html>

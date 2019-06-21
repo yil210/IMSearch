@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleleaf.org">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <title>IMSearch - Discover movies</title>
+
+  <!-- Bootstrap core CSS -->
+  <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Custom styles for this template -->
+
+<!--    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">-->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    
+<link href="css/main.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js" type="text/javascript" ></script>
+  <script th:inline="javascript" th:src="@{/js/background.js}"></script>
+
+</head>
+
+<body id="myBody" name="myBody">
+<!-- Navigation -->
+<!--  <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" >-->
+    <nav class="navbar navbar-expand-lg  fixed-top" style="color: #fff; background-color: black">
+    <div class="container">
+      <a class="navbar-brand" style="color: #fff" href="/index">IMSearch</a>
+        <div class="s-bar">
+		<form action="/index" method="POST">
+			<input type="text"  id="query" name="query" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Search';}">
+			<input type="submit"  value="Search"/>
+		</form>
+	   </div>
+    <i class="small material-icons" style="float: right">settings</i>
+    <a href="/advanced_search"style="color: #fff; float: right">Advanced Search</a>
+<!--
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>   
+      <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="advanced_search">Advanced Search</a>
+          </li>
+        </ul>
+      </div>
+-->
+    </div>
+  </nav>
+
+  <!-- Page Content -->
+  <div class="container">
+        <br /><br /><br />
+      
+    <div class="row">
+      <!-- Blog Entries Column -->
+    
+     <div class="col-lg-6 col-md-6 offset-0" style="opacity: 0.9">
+        <!-- Categories Widget -->
+       <form action="/advanced_title_search" method="POST">
+        <div class="card my-4">
+          <h5 class="card-header">Advanced Title Search</h5>
+          <div class="card-body">
+            <div class="row" style="text-align:left">
+                
+              <div class="col-lg-12">
+                <div class="input-group mb-3">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text">Title</span>
+                      </div>
+                      <input type="text" id="title" name="title" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+                    </div>
+                  
+                <strong>Genre:</strong><br />
+                <input type="hidden" name="category" value="0">
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="checkbox" id="action" name="category" value="action">
+                  <label class="form-check-label" for="action">Action</label>
+                </div>
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="checkbox" id="adventure" name="category" value="adventure">
+                  <label class="form-check-label" for="adventure">Adventure</label>
+                </div>
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="checkbox" id="animation" name="category" value="animation">
+                  <label class="form-check-label" for="animation">Animation</label>
+                </div>
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="checkbox" id="biography" name="category" value="biography">
+                  <label class="form-check-label" for="biography">Biography</label>
+                </div>
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="checkbox" id="comedy" name="category" value="comedy">
+                  <label class="form-check-label" for="comedy">Comedy</label>
+                </div>
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="checkbox" id="crime" name="category" value="crime">
+                  <label class="form-check-label" for="crime">Crime</label>
+                </div>
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="checkbox" id="documentary" name="category" value="documentary">
+                  <label class="form-check-label" for="documentary">Documentary</label>
+                </div>
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="checkbox" id="drama" name="category" value="drama">
+                  <label class="form-check-label" for="drama">Drama</label>
+                </div>
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="checkbox" id="family" name="category" value="family">
+                  <label class="form-check-label" for="family">Family</label>
+                </div>
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="checkbox" id="fantasy" name="category" value="fantasy">
+                  <label class="form-check-label" for="fantasy">Fantasy</label>
+                </div>
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="checkbox" id="filmnoir" name="category" value="filmnoir">
+                  <label class="form-check-label" for="filmnoir">Film-Noir</label>
+                </div>
+                <!--<div class="form-check form-check-inline">-->
+                  <!--<input class="form-check-input" type="checkbox" id="gameshow" name="gameshow" value="option2">-->
+                  <!--<label class="form-check-label" for="gameshow">Game-Show</label>-->
+                <!--</div>-->
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="checkbox" id="history" name="category" value="history">
+                  <label class="form-check-label" for="history">History</label>
+                </div>
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="checkbox" id="horror" name="category" value="horror">
+                  <label class="form-check-label" for="horror">Horror</label>
+                </div>
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="checkbox" id="music" name="category" value="music">
+                  <label class="form-check-label" for="music">Music</label>
+                </div>
+                
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="checkbox" id="musical" name="category" value="musical">
+                  <label class="form-check-label" for="musical">Musical</label>
+                </div>
+                
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="checkbox" id="mystery" name="category" value="mystery">
+                  <label class="form-check-label" for="mystery">Mystery</label>
+                </div>
+                
+                <!--<div class="form-check form-check-inline">-->
+                  <!--<input class="form-check-input" type="checkbox" id="news" name="news" value="option2">-->
+                  <!--<label class="form-check-label" for="news">News</label>-->
+                <!--</div>-->
+                
+                <!--<div class="form-check form-check-inline">-->
+                  <!--<input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="option2">-->
+                  <!--<label class="form-check-label" for="inlineCheckbox2">Reality-TV</label>-->
+                <!--</div>-->
+                
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="checkbox" id="romance" name="category" value="romance">
+                  <label class="form-check-label" for="romance">Romance</label>
+                </div>
+                
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="checkbox" id="scifi" name="category" value="Sci-Fi">
+                  <label class="form-check-label" for="scifi">Sci-Fi</label>
+                </div>
+
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="checkbox" id="short" name="category" value="short">
+                  <label class="form-check-label" for="sport">Short</label>
+                </div>
+
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="checkbox" id="sport" name="category" value="sport">
+                  <label class="form-check-label" for="sport">Sport</label>
+                </div>
+                
+                <!--<div class="form-check form-check-inline">-->
+                  <!--<input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="option2">-->
+                  <!--<label class="form-check-label" for="inlineCheckbox2">Talk-Show</label>-->
+                <!--</div>-->
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="checkbox" id="superhero" name="category" value="superhero">
+                  <label class="form-check-label" for="sport">Superhero</label>
+                </div>
+                
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="checkbox" id="thriller" name="category" value="thriller">
+                  <label class="form-check-label" for="thriller">Thriller</label>
+                </div>
+                
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="checkbox" id="war" name="category" value="war">
+                  <label class="form-check-label" for="war">War</label>
+                </div>
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="checkbox" id="western" name="category" value="western">
+                  <label class="form-check-label" for="western">Western</label>
+                </div>
+                  <br /> <br />
+                  <div>
+                    <strong>Release Date</strong>(Format: YYYY-MM-DD, YYYY-MM, or YYYY)
+                  </div>
+                <div class="row">
+                    <div class="col">
+                      <input type="text" class="form-control" id="date_from" name="date_from" placeholder="From">
+                    </div>
+                    <div class="col">
+                      <input type="text" class="form-control" id="date_to" name="date_to" placeholder="To">
+                    </div>
+                  </div>
+                  <br />
+
+                <div>
+                  <strong>Rating Range</strong>
+                </div>
+                <div class="row">
+                  <div class="col-lg-3 offset-0">
+                    <select class="select1" id="rating_from" name="rating_from">
+                      <option selected>From...</option>
+                    </select>
+                  </div>
+                  <div class="col-lg-3 offset-3">
+                    <select class="select2" id="rating_to" name="rating_to">
+                      <option selected>To...</option>
+                    </select>
+                  </div>
+                </div>
+                <br />
+                  
+                  <div>
+                    <div class="input-group mb-3">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text">Keywords:</span>
+                      </div>
+                      <input type="text" id="keyword" name="keyword" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+                    </div>
+                  </div>
+              </div>
+        
+            </div>
+          </div>
+         <div class="card-footer text-muted">
+              <button type="submit" class="btn btn-primary" style="float: right;background-color:#f8dc4c;border-color:#f8dc4c;color:#000">Search &rarr;</button>
+          </div>
+        </div>
+       </form>
+
+      </div>
+    
+      <!-- Sidebar Widgets Column -->
+      <div class="col-lg-5 col-md-5 offset-5 position-fixed" style="opacity: 0.9;float: right">
+          <br />
+          <div class="container-fluid rounded" style="background-color: #fff; opacity: 0.9">
+            <p class="card-title" style="padding: 5px"><strong>Collaborations:</strong>&nbsp;&nbsp;(Both fields required for each search)</p>
+        </div>
+        <!-- Categories Widget -->
+        <form action="/collaboration_search1" method="POST">
+        <div class="card my-4">
+          <h5 class="card-header">Two People in the Same Title</h5>
+          <div class="card-body">
+            <div class="row" style="text-align:left">
+                
+              <div class="col-lg-12">
+                <ul class="list-unstyled mb-0">
+                  <li>
+                    <div class="input-group mb-3">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text" >Name 1</span>
+                      </div>
+                      <input type="text" id="name1" name="name1" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+                    </div>
+                  </li>
+                  <li>
+                    <div class="input-group mb-3">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text" >Name 2</span>
+                      </div>
+                      <input type="text" id="name2" name="name2" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+                    </div>
+                  </li>
+                  
+                </ul>
+              </div>
+            </div>
+          </div>
+         <div class="card-footer text-muted">
+              <button type="submit" class="btn btn-primary" style="float: right; background-color:#f8dc4c;border-color:#f8dc4c;color:#000">Search &rarr;</button>
+          </div>
+        </div>
+        </form>
+
+        <form action="/collaboration_search2" method="POST">
+        <div class="card my-4">
+          <h5 class="card-header">Two Titles with the Same People</h5>
+          <div class="card-body">
+            <div class="row" style="text-align:left">
+                
+              <div class="col-lg-12">
+                <ul class="list-unstyled mb-0">
+                  <li>
+                    <div class="input-group mb-3">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text" >Keyword 1</span>
+                      </div>
+                      <input type="text" id="keyword1" name="keyword1" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+                    </div>
+                  </li>
+                  <li>
+                    <div class="input-group mb-3">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text" >Keyword 2</span>
+                      </div>
+                      <input type="text"  id="keyword2" name="keyword2" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+                    </div>
+                  </li>
+                  
+                </ul>
+              </div>
+            </div>
+          </div>
+         <div class="card-footer text-muted">
+              <button type="submit" class="btn btn-primary" style="float: right; background-color:#f8dc4c;border-color:#f8dc4c;color:#000">Search &rarr;</button>
+          </div>
+        </div>
+        </form>
+          
+      </div>
+</div>
+    <!-- /.row -->
+
+
+  </div>
+  <!-- /.container -->
+
+  <!-- Footer -->
+  <footer class="py-5" style="background-color: black;">
+    <div class="container">
+      <p class="m-0 text-center text-white">Copyright &copy; IMSearch 2019</p>
+    </div>
+    <!-- /.container -->
+  </footer>
+
+  <!-- Bootstrap core JavaScript -->
+  <script src="jquery/jquery.min.js"></script>
+  <script src="bootstrap/js/bootstrap.bundle.min.js"></script>
+
+</body>
+<script>
+  $(function(){
+    var $select = $(".select1");
+    for (i=1.0;i<=10.0;i=Math.round( (i+0.1) * 10 ) / 10){
+      $select.append($('<option></option>').val(i).html(i))
+    }
+  });
+  $(function(){
+    var $select = $(".select2");
+    for (i=1.0;i<=10.0;i=Math.round( (i+0.1) * 10 ) / 10){
+      $select.append($('<option></option>').val(i).html(i))
+    }
+  });
+</script>
+
+</html>
